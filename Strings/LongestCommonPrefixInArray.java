@@ -1,44 +1,53 @@
+/*
+Given a array of N strings, find the longest common prefix among all strings present in the array.
+https://practice.geeksforgeeks.org/problems/longest-common-prefix-in-an-array/0
+*/
+
 import java.util.*;
 import java.lang.*;
 import java.io.*;
 
-class CompareString implements Comparator<String> {
-    
-    // Two string comparison based on first chaaracter (not whol string)
-    public int compare(String a, String b){
-        
-        int minLength = Math.min(a.length(), b.length());
-        if(minLength > 0){
-            return a.charAt(0) - b.charAt(0);
-        }
-        return a.length() - b.length();
-    }
-}
 
 class GFG
  {
+    // gets common prefix of two strings
+    static String commonPrefixTwoStrings(String str1, String str2){
+        int n = str1.length();
+        int m = str2.length();
+        int minLength = Math.min(n,m);
+        
+        for(int i=0;i<n;i++){
+            if(str1.charAt(i) != str2.charAt(i)){
+                if(i==0)
+                    return "";
+                return str1.substring(0, i);
+            }
+        }
+        return str1.substring(0,minLength);
+    }
+    
+    // O(minLength * N)
     static String getCommonPrefix(String[] strs, int n){
         
-        // sort strings by comparing only first character of strings
-        Arrays.sort(strs, new CompareString());
-        
-        int minLength = Integer.MAX_VALUE;
+        String smallestStringPrefix = strs[0];
         
         // get min from all string lengths
-        for(int i=0;i<n;i++){
-            minLength  = Math.min(minLength, strs[i].length());
-        }
-        
-        // compare first and last strings of array till min length (of all strings)
-        for(int i=0;i<minLength;i++){
-            if(strs[0].charAt(i) != strs[n-1].charAt(i)){
-                if(i==0)
-                    return "-1";
-                return strs[0].substring(0,i);
+        for(int i=1;i<n;i++){
+            if(smallestStringPrefix.length() > strs[i].length()){
+                smallestStringPrefix = strs[i];
             }
         }
         
-        return strs[0].substring(0, minLength);
+        // update smallest string prefix if smaller prefix found by comparing each of the other strings
+        for(int i=0;i<n;i++){
+            if(smallestStringPrefix.length() > 0){
+                smallestStringPrefix = commonPrefixTwoStrings(smallestStringPrefix, strs[i]);
+            } else {
+                return "-1";
+            }
+        }
+        
+        return smallestStringPrefix.length() > 0 ? smallestStringPrefix : "-1";
     }
      
 	public static void main (String[] args) throws IOException
