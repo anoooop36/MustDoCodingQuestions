@@ -44,6 +44,7 @@ class gfg
 class Box implements Comparable<Box> {
     int h,w,l;
     Box(int h, int w, int l){
+        // cover rotation of base (a.l<b.l && a.w<b.w || a.l<b.w && a.w<b.l) 
         if(w<l){
             int temp = l;
             l = w;
