@@ -4,10 +4,10 @@ import java.io.*;
 public class InfixToPrefix_TwoStackSolution {
 
     static boolean isOperand(char ch) {
-        if (ch == '+' || ch == '-' || ch == '(' || ch == '*' || ch == '/' || ch == '^' || ch == ')') {
-            return false;
+        if (Character.isAlphabetic(ch) || Character.isDigit(ch)) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     static int precedence(char ch) {
