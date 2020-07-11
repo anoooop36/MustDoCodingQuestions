@@ -1,3 +1,8 @@
+/*
+You are given a linked list of N nodes. The task is to remove the loop from the linked list, if present.
+https://practice.geeksforgeeks.org/problems/remove-loop-in-linked-list/1
+*/
+
 import java.util.*;
 import java.io.*;
 import java.lang.*;

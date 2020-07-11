@@ -1,3 +1,16 @@
+/*
+Given a Linked List of size N, where every node represents a linked list and contains two pointers of its type:
+(i) a next pointer to the next node,
+(ii) a bottom pointer to a linked list where this node is head.
+
+You have to flatten the linked list to a single linked list which should be sorted.
+And after flattening the above list, the sorted linked list looks like:
+
+ 5-> 7-> 8- > 10 -> 19-> 20-> 22-> 28-> 30-> 35-> 40-> 45-> 50.
+
+Note: The flattened list will be printed using the bottom pointer instead of next pointer.
+https://practice.geeksforgeeks.org/problems/flattening-a-linked-list/1
+*/
 import java.util.Scanner;
 import java.util.*;
 import java.io.*;

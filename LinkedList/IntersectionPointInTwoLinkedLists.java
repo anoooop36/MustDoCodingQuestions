@@ -1,6 +1,10 @@
+/*
+
+Given two singly linked lists of size N and M, write a program to get the point where two linked lists intersect each other.
+https://practice.geeksforgeeks.org/problems/intersection-point-in-y-shapped-linked-lists/1
+*/
+
 import java.util.*;
-
-
 class Node
 {
     int data;
