@@ -1,16 +1,14 @@
 /*
-Given a Binary Search Tree (with all values unique) and two node values. Find the Lowest Common Ancestors of the two nodes in the BST.
-              5
-          /        \ 
-        4          6
-     /     \     /      \
-   3      N      N       7
- /    \                 /    \ 
-N     N                 N     8
+Given a Binary Tree with all unique values and two nodes value n1 and n2. The task is to find the lowest common ancestor of the 
+given two nodes. We may assume that either both n1 and n2 are present in the tree or none of them is present. 
+          5
+        /
+      2
+     /   \
+   3     4
+The lowest common ancestor of given nodes 3 and 4 is 2.
 
-Here, the LCA of 7 and 8 is 7.
-
-https://practice.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-bst/1
+https://practice.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-binary-tree/1
 */
 
 import java.util.LinkedList;
@@ -99,54 +97,45 @@ class GfG {
         printInorder(root.right);
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int t = Integer.parseInt(br.readLine());
-        // Scanner sc = new Scanner(System.in);
-        while (t > 0) {
+
+        while (t-- > 0) {
+            String input[] = br.readLine().trim().split(" ");
+            int a = Integer.parseInt(input[0]);
+            int b = Integer.parseInt(input[1]);
             String s = br.readLine();
             Node root = buildTree(s);
-            BST g = new BST();
-            String X = br.readLine();
-            String arr[] = X.split(" ");
-            int x, y;
-            x = Integer.parseInt(arr[0]);
-            y = Integer.parseInt(arr[1]);
-            System.out.println(g.LCA(root, x, y).data);
-            t--;
+            Tree g = new Tree();
+            Node k = g.lca(root, a, b);
+            System.out.println(k.data);
 
         }
     }
-
 }
 
-class BST {
-
+class Tree {
+    
     /*
-     * idea is to use BST properties to narrow down problem. Start from root if
-     * root.data <=n2 and root.data>=n1 return root, if root.data < n1 then look in
-     * right subtree of root otherwise look in left subtree
+     * idea is to use post order traversal. if we found n1 in one subtree and n2 in
+     * another subtree of root then root is lca else not null lca of any of the
+     * subtree is lca (don't update lca on root it should be from left or right)
      */
-    Node LcaUtil(Node root, int n1, int n2) {
+    Node lca(Node root, int n1, int n2) {
         if (root == null)
             return root;
-        if (n1 <= root.data && root.data <= n2) {
+
+        if (root.data == n1 || root.data == n2)
             return root;
-        } else if (n1 > root.data) {
-            return LcaUtil(root.right, n1, n2);
-        } else {
-            return LcaUtil(root.left, n1, n2);
-        }
-    }
 
-    Node LCA(Node root, int n1, int n2) {
-        if (n1 > n2) {
-            int temp = n1;
-            n1 = n2;
-            n2 = temp;
-        }
-        return LcaUtil(root, n1, n2);
-    }
+        Node left = lca(root.left, n1, n2);
+        Node right = lca(root.right, n1, n2);
 
+        if (left != null && right != null)
+            return root;
+
+        return left != null ? left : right;
+    }
 }
