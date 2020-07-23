@@ -132,42 +132,43 @@ class Tree {
     /*
         Order between removing leaf node from its parent and  connecting leaf nodes are important
         if we connect leaf nodes before detaching them  we might end up with cycle in tree.
-        Any of the traversals can be used for coversion
+        Any of the traversals can be used for conversion but revers inorder (right, root, left) is good as it doesn't require to extra head pointer
         Need to maintain previous leaf node (to connect with current node).
+        return previous node pointer as head of DLL
     */
-    void convertToDLLUtil(Node root, RefNode prev, RefNode head) {
-        if (root == null)
+    void convertToDLLUtil(Node root, RefNode prev){
+        if(root == null)
             return;
         Node left = root.left;
         Node right = root.right;
-        if (left != null || right != null) {
-            if (left != null && left.left == null && left.right == null) {
+        if(left != null || right != null){
+            if(left != null && left.left == null && left.right == null){
                 root.left = null;
             }
-
-            if (right != null && right.left == null && right.right == null) {
+            
+            if(right != null && right.left == null && right.right == null){
                 root.right = null;
             }
         }
 
-        convertToDLLUtil(left, prev, head);
-        if (left == null && right == null) {
-            if (prev.node == null) {
-                head.node = root;
-            } else {
-                prev.node.right = root;
-                root.left = prev.node;
+        convertToDLLUtil(right, prev);
+        
+        if(left == null && right == null){
+            if(prev.node != null) {
+                prev.node.left = root;
+                root.right = prev.node;
             }
             prev.node = root;
         }
-        convertToDLLUtil(right, prev, head);
+        
+        convertToDLLUtil(left, prev);
     }
-
-    public Node convertToDLL(Node root) {
+    
+    public Node convertToDLL(Node root)
+    {
         RefNode prev = new RefNode();
-        RefNode head = new RefNode();
-        convertToDLLUtil(root, prev, head);
-        return head.node;
+        convertToDLLUtil(root, prev);
+        return prev.node;
     }
 
 }
