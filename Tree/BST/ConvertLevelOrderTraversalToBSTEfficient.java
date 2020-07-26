@@ -71,6 +71,10 @@ class NodeInfo {
 
 class GFG {
 
+    /*
+        idea is to Use queue to build BST but it will require min and max at each node to append its left and right.
+        we append new node only when it is within range of min max of currentNode.
+    */
     public Node constructBST(int[] arr) {
         int n = arr.length;
         if (n == 0)
