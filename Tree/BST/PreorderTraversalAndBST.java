@@ -9,27 +9,21 @@ import java.lang.*;
 import java.io.*;
 
 class GFG {
-    static int getInorderIndex(int start, int end, int[] pre) {
-        for (int i = start + 1; i <= end; i++) {
-            if (pre[i] > pre[start])
-                return i - 1;
-        }
-        return end;
-    }
-
     /*
-        Solve problem top down if root is in range of min and max recur for subtrees otherwise return false
-        Update min max using root. find subtrees using inorder position of root. 
+        Solve problem top down. Maintain min and max. Have a reference Index starts from 0 . 
+        if root is in range of min and max recur for subtrees otherwise return.
+        Update min max using root.Update refIndex.
+        consider element at ref index as root and check it lies between min max range.
+        if all elements processed then its a valid preorder of BST.
     */
-    static boolean isValidPreorder(int start, int end, int min, int max, int[] pre) {
-        if (start > end)
-            return true;
-        if (min < pre[start] && max > pre[start]) {
-            int inorderIndex = getInorderIndex(start, end, pre);
-            return isValidPreorder(start + 1, inorderIndex, min, pre[start], pre)
-                    && isValidPreorder(inorderIndex + 1, end, pre[start], max, pre);
+    static void isValidPreorder(Start start, int end, int min, int max, int[] pre) {
+        if (start.val > end)
+            return;
+        if (min < pre[start.val] && max > pre[start.val]) {
+            int curr = pre[start.val++];
+            isValidPreorder(start, end, min, curr, pre);
+            isValidPreorder(start, end, curr, max, pre);
         }
-        return false;
     }
 
     public static void main(String[] args) throws IOException {
@@ -43,7 +37,9 @@ class GFG {
             for (int i = 0; i < n; i++) {
                 arr[i] = Integer.parseInt(strs[i]);
             }
-            if (isValidPreorder(0, n - 1, Integer.MIN_VALUE, Integer.MAX_VALUE, arr))
+            Start start = new Start();
+            isValidPreorder(start, n - 1, Integer.MIN_VALUE, Integer.MAX_VALUE, arr);
+            if (start.val == n)
                 sb.append(1 + "\n");
             else
                 sb.append(0 + "\n");
