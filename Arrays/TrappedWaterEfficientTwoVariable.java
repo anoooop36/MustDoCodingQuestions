@@ -10,29 +10,35 @@ import java.io.*;
 class GFG
  {
      // for each element trapped water depends on left max column and right max column of it
-     // process elements from both ends using two indexes i=0,j=n-1
-     // maintain leftMax and right from both end. process element with low value first and update leftmax
+     // process elements from both ends using two indexes i=1,j=n-2
+     // maintain leftMax and right from both end. process element with left side if leftMax is lower than rightMax else from right side and update leftmax
      // rightMax accordingly.
 	 static int getTrappedWater(int arr[], int n){
-	     int leftMax = arr[0];
-	     int rightMax = arr[n-1];
+		 int leftMax = arr[0];
+		 int rightMax = arr[n-1];
 
-         int i = 0;
-         int j = n-1;
-         int trappedWater = 0;
-         
-         while(i <= j){
-             if(arr[i] < arr[j]){
-                 trappedWater += (Math.min(leftMax,rightMax) - arr[i++]);
-                 if(i<n)
-                    leftMax = Math.max(leftMax, arr[i]);
-             } else {
-                 trappedWater += (Math.min(leftMax,rightMax) -arr[j--]);
-                 if(j>=0)
-                    rightMax = Math.max(rightMax, arr[j]);
-             }
-         }
-	     
+		 int i = 1;
+		 int j = n-2;
+		 int trappedWater = 0;
+
+		 while(i <= j){
+		     if(leftMax < rightMax){
+			 if(arr[i]> leftMax){
+			     leftMax = arr[i];
+			 } else {
+			     trappedWater += (leftMax - arr[i]);
+			 }
+			 i++;
+		     } else {
+			 if(rightMax< arr[j]){
+			     rightMax = arr[j];
+			 } else {
+			     trappedWater += (rightMax - arr[j]);
+			 }
+			 j--;
+		     }
+		 }
+
 	     return trappedWater;
 	 }
 	 
