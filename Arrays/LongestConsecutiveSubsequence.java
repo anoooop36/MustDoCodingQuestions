@@ -1,0 +1,72 @@
+/*
+Given an array A of integers. The task is to complete the function which returns an integer denoting the length 
+of the longest sub-sequence such that elements in the sub-sequence are consecutive integers, the consecutive numbers can be in any order.
+https://practice.geeksforgeeks.org/problems/longest-consecutive-subsequence/1
+*/
+
+
+import java.util.Scanner;
+import java.util.*;
+import java.util.HashSet;
+
+class FindLongestSubsequence
+{
+    // Driver Code
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		
+		while(t>0)
+		{
+			int n = sc.nextInt();
+			int a[] = new int[n];
+			
+			for(int i=0; i<n; i++)
+				a[i] = sc.nextInt();
+		    
+		    // Making object of GfG	
+			GfG g = new GfG();
+			
+			System.out.println(g.findLongestConseqSubseq(a, n));
+		
+		t--;
+		}
+	}
+}
+
+
+
+
+class GfG
+{
+    // idea is to find start points of sequence and then from that point count its consecutive subsequence size
+    // start point can be identified by finding (arr[i] - 1) in array 
+    int findLongestConseqSubseq(int a[], int n)
+    {
+        
+	    HashSet<Integer> set = new HashSet<>();
+	    int maxCount = 1;
+	    
+	    for(int i=0;i<n;i++){
+	        set.add(a[i]);
+	    }
+	    
+	    for(int i=0;i<n;i++){
+	        // if start point count from that point else continue;
+	        
+	        if(!set.contains(a[i]-1)){
+	           int currentCount = 1;
+	           int val = a[i];
+	           while(currentCount<=n && set.contains(val+1)){
+	               currentCount++;
+	               val++;
+	           }
+	           maxCount = Math.max(currentCount, maxCount);
+	        }
+	    }
+	    
+	    return maxCount;
+	    
+    }
+}
