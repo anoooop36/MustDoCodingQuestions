@@ -124,8 +124,9 @@ class Tree {
     }
 
     /*
+        Main idea is to find successor and delete successor after swapping value with root. Successor will not have any left child.
         if we maintain parent for inorder successor node we can easily delete during finding inorder successor node.
-        node need to call delete on successor's value.
+        No need to call delete on successor's value.
      */
     public static Node deleteNode(Node root, int x) {
         if (root == null)
