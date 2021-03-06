@@ -66,7 +66,7 @@ class Trie {
 	
 	void delete(String word){
 		// case 1: last node has child
-        // case 2: last node doesnt have child (remove current node but remove parent only if it is not endOfWord and has only one child)
+        	// case 2: last node doesnt have child (remove current node but remove parent only if it is not endOfWord and has only one child)
 		deleteKeyUtil(root,word,0,word.length());	
 	}
 	
